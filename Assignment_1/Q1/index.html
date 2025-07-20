@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Node.js AJAX Example</title>
+
+</head>
+<body >
+    <div >
+        <h1 >Node.js AJAX Call</h1>
+        <p >Click the button below to fetch a message from the Node.js server.</p>
+
+        <button id="fetchButton" >
+            Fetch Hello Message
+        </button>
+
+        <div id="responseContainer" >
+           
+            Waiting for response...
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('fetchButton').addEventListener('click', async () => {
+            const responseContainer = document.getElementById('responseContainer');
+            responseContainer.textContent = 'Fetching...'; 
+
+            try {
+               
+                const response = await fetch('/gethello');
+
+                
+                if (response.ok) {
+                    const data = await response.text(); 
+                    responseContainer.textContent = data; 
+                } else {
+                    responseContainer.textContent = `Error: ${response.status} ${response.statusText}`;
+                }
+            } catch (error) {
+                console.error('Error fetching data:', error);
+                responseContainer.textContent = `Failed to fetch: ${error.message}`;
+            }
+        });
+    </script>
+</body>
+</html>
